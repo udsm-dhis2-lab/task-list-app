@@ -2,25 +2,83 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0-rc.3.
 
+# NG DHIS2 boilerplate
+
+Boilerplate codes to fast track developing DHIS2 applications based on Angular framework
+
+## Prerequisites
+
+1. [NodeJs (16 or higher)](https://nodejs.org)
+2. git, can be installed by running `apt install git`
+
+## Setup
+
+Clone repository
+
+```bash
+ git clone https://github.com/udsm-dhis2-lab/ng-dhis2-boilerplate.git <your-app-name>
+```
+
+Navigate to application root folder
+
+```bash
+cd <your-app-name>
+```
+
+Install all required dependencies for the app
+
+```bash
+npm install --legacy-peer-deps
+```
+
+**NOTE**: Since you are using this boilerplate to start your new app, it is recommended that you find and replace every occurance of `ng-dhis2-boilerplate` with the name of your intended app. Also provide better description of your app in `manifest.webapp`
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+To start development server
 
-## Code scaffolding
+```bash
+npm start
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Navigate to [http://localhost:4200](http://localhost:4200).
+
+This command will require proxy-config.json file available in the root of your source code, usually this file has this format
+
+```json
+{
+  "/api": {
+    "target": "https://play.dhis2.org/40.2.1",
+    "secure": "false",
+    "auth": "admin:district",
+    "changeOrigin": "true"
+  },
+  "/dhis-web-commons": {
+    "target": "https://play.dhis2.org/40.2.1",
+    "secure": "false",
+    "auth": "admin:district",
+    "changeOrigin": "true"
+  },
+  "/icons": {
+    "target": "https://play.dhis2.org/40.2.1",
+    "secure": "false",
+    "auth": "admin:district",
+    "changeOrigin": "true"
+  }
+}
+```
+
+We have provided `proxy-config.example.json` file as an example, make a copy and rename to `proxy-config.json`
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To build the project run
 
-## Running unit tests
+```bash
+npm run build
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+The build artifacts will be stored in the `dist/`, this will include a zip file ready for deploying to any DHIS2 instance..
 
 ## Further help
 
