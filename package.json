@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && cd dist/ng-dhis2-boilerplate/browser && zip -r -D ng-dhis2-boilerplate.zip .",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

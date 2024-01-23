@@ -1,12 +1,18 @@
 {
   "/api": {
-    "target": "https://play.dhis2.org/2.30",
+    "target": "https://play.dhis2.org/40.2.1",
     "secure": "false",
     "auth": "admin:district",
     "changeOrigin": "true"
   },
-  "/": {
-    "target": "https://play.dhis2.org/2.30",
+  "/dhis-web-commons": {
+    "target": "https://play.dhis2.org/40.2.1",
+    "secure": "false",
+    "auth": "admin:district",
+    "changeOrigin": "true"
+  },
+  "/icons": {
+    "target": "https://play.dhis2.org/40.2.1",
     "secure": "false",
     "auth": "admin:district",
     "changeOrigin": "true"
