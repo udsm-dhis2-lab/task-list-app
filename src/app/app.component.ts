@@ -1,14 +1,20 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { Component, OnInit } from '@angular/core';
+import { NgDhis2ShellWrapper } from '@iapps/ng-dhis2-shell';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: '<ng-dhis2-shell (shellHasLoaded)="onReady()"></ng-dhis2-shell>',
 })
-export class AppComponent {
-  title = 'ngx-dhis2-shell-boilerplate';
+export class AppComponent extends NgDhis2ShellWrapper {
+  override componentPortal: ComponentPortal<any> = new ComponentPortal(
+    AppComponentContent
+  );
 }
+
+@Component({
+  selector: 'app-root-content',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+})
+export class AppComponentContent {}

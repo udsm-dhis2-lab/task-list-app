@@ -1,0 +1,23 @@
+{
+  "version": "0.0.0",
+  "name": "ng-dhis2-boilerplate",
+  "description": "",
+  "appType": "APP",
+  "launch_path": "index.html",
+  "icons": {
+    "16": "assets/icons/icon-72x72.png",
+    "48": "assets/icons/icon-96x96.png",
+    "128": "assets/icons/icon-128x128.png"
+  },
+  "developer": {
+    "name": "",
+    "url": ""
+  },
+  "default_locale": "en",
+  "activities": {
+    "dhis": {
+      "href": "../../../"
+    }
+  },
+  "authorities": []
+}

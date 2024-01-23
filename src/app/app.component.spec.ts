@@ -14,16 +14,18 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'ngx-dhis2-shell-boilerplate' title`, () => {
+  it(`should have the 'ng-dhis2-boilerplate' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ngx-dhis2-shell-boilerplate');
+    expect(app.title).toEqual('ng-dhis2-boilerplate');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ngx-dhis2-shell-boilerplate app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain(
+      'ng-dhis2-boilerplate app is running!'
+    );
   });
 });

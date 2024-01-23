@@ -23,7 +23,7 @@
       "ES2022",
       "dom"
     ]
-  },
+  ,"jsx": "react","skipLibCheck": true,"skipDefaultLibCheck": true},
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
