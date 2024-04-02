@@ -16,7 +16,7 @@ Boilerplate codes to fast track developing DHIS2 applications based on Angular f
 Clone repository
 
 ```bash
- git clone https://github.com/udsm-dhis2-lab/ng-dhis2-boilerplate.git <your-app-name>
+ git clone https://github.com/udsm-dhis2-lab/dhisproject.git <your-app-name>
 ```
 
 Navigate to application root folder
@@ -31,7 +31,7 @@ Install all required dependencies for the app
 npm install --legacy-peer-deps
 ```
 
-**NOTE**: Since you are using this boilerplate to start your new app, it is recommended that you find and replace every occurance of `ng-dhis2-boilerplate` with the name of your intended app. Also provide better description of your app in `manifest.webapp`
+**NOTE**: Since you are using this boilerplate to start your new app, it is recommended that you find and replace every occurance of `dhisproject` with the name of your intended app. Also provide better description of your app in `manifest.webapp`
 
 ## Development server
 

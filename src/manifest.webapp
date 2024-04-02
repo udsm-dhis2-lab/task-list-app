@@ -1,6 +1,6 @@
 {
   "version": "0.0.0",
-  "name": "ng-dhis2-boilerplate",
+  "name": "dhisproject",
   "description": "",
   "appType": "APP",
   "launch_path": "index.html",

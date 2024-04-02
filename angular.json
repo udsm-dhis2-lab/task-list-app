@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ng-dhis2-boilerplate": {
+    "dhisproject": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/ng-dhis2-boilerplate",
+            "outputPath": "dist/dhisproject",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["src/polyfills.ts"],
@@ -53,13 +53,16 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
-              "buildTarget": "ng-dhis2-boilerplate:build:production"
+              "buildTarget": "dhisproject:build:production"
             },
             "development": {
               "proxyConfig": "proxy-config.json",
-              "buildTarget": "ng-dhis2-boilerplate:build:development"
+              "buildTarget": "dhisproject:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -67,7 +70,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "ng-dhis2-boilerplate:build"
+            "buildTarget": "dhisproject:build"
           }
         },
         "test": {

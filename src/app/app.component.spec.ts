@@ -14,10 +14,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'ng-dhis2-boilerplate' title`, () => {
+  it(`should have the 'dhisproject' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ng-dhis2-boilerplate');
+    expect(app.title).toEqual('dhisproject');
   });
 
   it('should render title', () => {
@@ -25,7 +25,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.content span')?.textContent).toContain(
-      'ng-dhis2-boilerplate app is running!'
+      'dhisproject app is running!'
     );
   });
 });
