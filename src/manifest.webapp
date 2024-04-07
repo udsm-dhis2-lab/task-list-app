@@ -1,6 +1,6 @@
 {
   "version": "0.0.0",
-  "name": "dhisproject",
+  "name": "tasklist",
   "description": "",
   "appType": "APP",
   "launch_path": "index.html",

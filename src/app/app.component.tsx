@@ -1,19 +1,15 @@
 import { ComponentPortal } from "@angular/cdk/portal";
 import { Component } from "@angular/core";
-import { NgDhis2ShellWrapper } from "@iapps/ng-dhis2-shell";
 import {
-  Button,
   DataTable,
-  TableHead,
-  DataTableRow,
-  DataTableColumnHeader,
-  TableBody,
   DataTableCell,
-  TableFoot,
+  DataTableColumnHeader,
+  DataTableRow,
+  TableBody,
+  TableHead,
 } from "@dhis2/ui";
-import React, { useEffect, useState } from "react";
-import { DatasetService } from "./dataset/dataset.service";
-import { HttpClient } from '@angular/common/http';
+import { NgDhis2ShellWrapper } from "@iapps/ng-dhis2-shell";
+import React from "react";
 
 @Component({
   selector: "app-root",
@@ -38,10 +34,18 @@ export class AppComponentContent {
       <DataTable scrollHeight="350px">
         <TableHead>
           <DataTableRow>
-            <DataTableColumnHeader fixed top="0">First name</DataTableColumnHeader>
-            <DataTableColumnHeader fixed top="0">Last name</DataTableColumnHeader>
-            <DataTableColumnHeader fixed top="0">Incident date</DataTableColumnHeader>
-            <DataTableColumnHeader fixed top="0">Last updated</DataTableColumnHeader>
+            <DataTableColumnHeader fixed top="0">
+              First name
+            </DataTableColumnHeader>
+            <DataTableColumnHeader fixed top="0">
+              Last name
+            </DataTableColumnHeader>
+            <DataTableColumnHeader fixed top="0">
+              Incident date
+            </DataTableColumnHeader>
+            <DataTableColumnHeader fixed top="0">
+              Last updated
+            </DataTableColumnHeader>
           </DataTableRow>
         </TableHead>
         <TableBody>
@@ -75,7 +79,6 @@ export class AppComponentContent {
             <DataTableCell>07/21/1981</DataTableCell>
             <DataTableCell>02/06/2007</DataTableCell>
           </DataTableRow>
-        
         </TableBody>
       </DataTable>
     );
