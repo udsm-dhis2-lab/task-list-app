@@ -1,5 +1,6 @@
 import { ComponentPortal } from "@angular/cdk/portal";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   DataTable,
   DataTableCell,
@@ -7,18 +8,20 @@ import {
   DataTableRow,
   TableBody,
   TableHead,
+  TabBar,
+  Tab,
+  SelectorBar,
+  SelectorBarItem,
 } from "@dhis2/ui";
 import { NgDhis2ShellWrapper } from "@iapps/ng-dhis2-shell";
 import React from "react";
+import { TaskSelectorBar } from "./components";
 
 @Component({
   selector: "app-root",
   template: '<ng-dhis2-shell (shellHasLoaded)="onReady()"></ng-dhis2-shell>',
 })
 export class AppComponent extends NgDhis2ShellWrapper {
-  title(title: any) {
-    throw new Error("Method not implemented.");
-  }
   override componentPortal: ComponentPortal<any> = new ComponentPortal(
     AppComponentContent
   );
@@ -29,6 +32,18 @@ export class AppComponent extends NgDhis2ShellWrapper {
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponentContent {
+  activateRoute = inject(ActivatedRoute);
+  router = inject(Router);
+  Menus = () => (
+    <SelectorBar>
+      <TaskSelectorBar
+        onChange={(selectedCategory: string) => {
+          this.router.navigate([`/${selectedCategory}`]);
+        }}
+      />
+      {/* <SelectorBarItem label="Organisation unit"></SelectorBarItem> */}
+    </SelectorBar>
+  );
   TableData = () => {
     return (
       <DataTable scrollHeight="350px">
