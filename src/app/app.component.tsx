@@ -1,5 +1,5 @@
 import { ComponentPortal } from "@angular/cdk/portal";
-import { Component, inject } from "@angular/core";
+import { Component, NgZone, inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   DataTable,
@@ -32,70 +32,23 @@ export class AppComponent extends NgDhis2ShellWrapper {
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponentContent {
-  activateRoute = inject(ActivatedRoute);
+  activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
-  Menus = () => (
-    <SelectorBar>
-      <TaskSelectorBar
-        onChange={(selectedCategory: string) => {
-          this.router.navigate([`/${selectedCategory}`]);
-        }}
-      />
-      {/* <SelectorBarItem label="Organisation unit"></SelectorBarItem> */}
-    </SelectorBar>
-  );
-  TableData = () => {
+  ngZone = inject(NgZone);
+  Menus = () => {
+    const selectedCategory =
+      this.activatedRoute?.snapshot?.firstChild?.routeConfig?.path;
     return (
-      <DataTable scrollHeight="350px">
-        <TableHead>
-          <DataTableRow>
-            <DataTableColumnHeader fixed top="0">
-              First name
-            </DataTableColumnHeader>
-            <DataTableColumnHeader fixed top="0">
-              Last name
-            </DataTableColumnHeader>
-            <DataTableColumnHeader fixed top="0">
-              Incident date
-            </DataTableColumnHeader>
-            <DataTableColumnHeader fixed top="0">
-              Last updated
-            </DataTableColumnHeader>
-          </DataTableRow>
-        </TableHead>
-        <TableBody>
-          <DataTableRow>
-            <DataTableCell>Onyekachukwu</DataTableCell>
-            <DataTableCell>Kariuki</DataTableCell>
-            <DataTableCell>02/06/2007</DataTableCell>
-            <DataTableCell>05/25/1972</DataTableCell>
-          </DataTableRow>
-          <DataTableRow>
-            <DataTableCell>Kwasi</DataTableCell>
-            <DataTableCell>Okafor</DataTableCell>
-            <DataTableCell>08/11/2010</DataTableCell>
-            <DataTableCell>02/26/1991</DataTableCell>
-          </DataTableRow>
-          <DataTableRow>
-            <DataTableCell>Siyabonga</DataTableCell>
-            <DataTableCell>Abiodun</DataTableCell>
-            <DataTableCell>07/21/1981</DataTableCell>
-            <DataTableCell>02/06/2007</DataTableCell>
-          </DataTableRow>
-          <DataTableRow>
-            <DataTableCell>Siyabonga</DataTableCell>
-            <DataTableCell>Abiodun</DataTableCell>
-            <DataTableCell>07/21/1981</DataTableCell>
-            <DataTableCell>02/06/2007</DataTableCell>
-          </DataTableRow>
-          <DataTableRow>
-            <DataTableCell>Siyabonga</DataTableCell>
-            <DataTableCell>Abiodun</DataTableCell>
-            <DataTableCell>07/21/1981</DataTableCell>
-            <DataTableCell>02/06/2007</DataTableCell>
-          </DataTableRow>
-        </TableBody>
-      </DataTable>
+      <SelectorBar>
+        <TaskSelectorBar
+          selectedCategory={selectedCategory}
+          onChange={(selectedCategory: string) => {
+            this.ngZone.run(() =>
+              this.router.navigate([`/${selectedCategory}`])
+            );
+          }}
+        />
+      </SelectorBar>
     );
   };
 }
