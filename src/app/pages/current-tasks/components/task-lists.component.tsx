@@ -14,18 +14,25 @@ import {
   TableFoot,
   Button,
   Chip,
+  Tag,
 } from "@dhis2/ui";
 import { TaskStatusCell } from "./task-status-cell.component";
+import { TaskProgress } from "./task-progress.component";
 
 export const TaskList = (props: { tasks: Task[] }) => {
   const { tasks } = props;
   const [currentTaskFilter, setCurrentTaskFilter] = useState("ALL");
 
   const taskSummary = useMemo(() => {
+    const all = tasks.length;
+    const completed = tasks.filter(
+      (task) => task.status === "COMPLETED"
+    )?.length;
     return {
-      all: tasks.length,
+      all,
       todo: tasks.filter((task) => task.status === "TODO")?.length,
-      completed: tasks.filter((task) => task.status === "COMPLETED")?.length,
+      completed,
+      progress: all > 0 ? ((completed / all) * 100).toFixed(0) : undefined,
     };
   }, [tasks]);
 
@@ -42,42 +49,47 @@ export const TaskList = (props: { tasks: Task[] }) => {
       <TableHead>
         <DataTableRow>
           <DataTableCell colSpan="5">
-            <Chip
-              dense
-              onClick={() => {
-                setCurrentTaskFilter("ALL");
-              }}
-              selected={currentTaskFilter === "ALL"}
-            >
-              <div className="task-chip">
-                <span>{taskSummary.all}</span>
-                <span>All Tasks</span>
+            <div className="task-summary-row">
+              <div>
+                <Chip
+                  dense
+                  onClick={() => {
+                    setCurrentTaskFilter("ALL");
+                  }}
+                  selected={currentTaskFilter === "ALL"}
+                >
+                  <div className="task-chip">
+                    <span>{taskSummary.all}</span>
+                    <span>All Tasks</span>
+                  </div>
+                </Chip>
+                <Chip
+                  dense
+                  onClick={() => {
+                    setCurrentTaskFilter("TODO");
+                  }}
+                  selected={currentTaskFilter === "TODO"}
+                >
+                  <div className="task-chip">
+                    <span>{taskSummary.todo}</span>
+                    <span>Todo</span>
+                  </div>
+                </Chip>
+                <Chip
+                  dense
+                  onClick={() => {
+                    setCurrentTaskFilter("COMPLETED");
+                  }}
+                  selected={currentTaskFilter === "COMPLETED"}
+                >
+                  <div className="task-chip">
+                    <span>{taskSummary.completed}</span>
+                    <span>Completed</span>
+                  </div>
+                </Chip>
               </div>
-            </Chip>
-            <Chip
-              dense
-              onClick={() => {
-                setCurrentTaskFilter("TODO");
-              }}
-              selected={currentTaskFilter === "TODO"}
-            >
-              <div className="task-chip">
-                <span>{taskSummary.todo}</span>
-                <span>Todo</span>
-              </div>
-            </Chip>
-            <Chip
-              dense
-              onClick={() => {
-                setCurrentTaskFilter("COMPLETED");
-              }}
-              selected={currentTaskFilter === "COMPLETED"}
-            >
-              <div className="task-chip">
-                <span>{taskSummary.completed}</span>
-                <span>Completed</span>
-              </div>
-            </Chip>
+              <TaskProgress taskSummary={taskSummary} />
+            </div>
           </DataTableCell>
         </DataTableRow>
       </TableHead>
