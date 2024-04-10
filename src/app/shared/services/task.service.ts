@@ -53,13 +53,6 @@ export class TaskService {
                         latestEntryPeriod.endDate
                       );
 
-                      if (latestEntryPeriod?.startDate) {
-                        startDates = [
-                          ...startDates,
-                          this.#getDate(latestEntryPeriod.startDate),
-                        ];
-                      }
-
                       const isEntryOpen =
                         differenceInDays(new Date(), entryStartDate) >= 0;
 
@@ -71,6 +64,13 @@ export class TaskService {
                         entryStartDate,
                         dataSet['timelyDays'] as number
                       );
+
+                      if (latestEntryPeriod?.startDate) {
+                        startDates = [
+                          ...startDates,
+                          this.#getDate(latestEntryPeriod.startDate),
+                        ];
+                      }
 
                       if (latestEntryPeriod?.endDate) {
                         endDates = [
@@ -119,23 +119,33 @@ export class TaskService {
                           'completeDataSetRegistrations'
                         ] as Record<string, any>[]) || [];
 
-                      return dataSets.map((dataSet: any) => {
-                        const completeRegistration: any =
-                          completeRegistrations.find(
-                            (completeness: any) =>
-                              completeness?.period ===
-                                dataSet.entryPeriod?.id &&
-                              completeness?.dataSet === dataSet.id &&
-                              completeness?.organisationUnit ===
-                                dataSet.orgUnit?.id
-                          );
+                      return dataSets
+                        .map((dataSet: any) => {
+                          const completeRegistration: any =
+                            completeRegistrations.find(
+                              (completeness: any) =>
+                                completeness?.period ===
+                                  dataSet.entryPeriod?.id &&
+                                completeness?.dataSet === dataSet.id &&
+                                completeness?.organisationUnit ===
+                                  dataSet.orgUnit?.id
+                            );
 
-                        return new Task({
-                          ...dataSet,
-                          completed: completeRegistration?.completed,
-                          completedDate: completeRegistration?.date,
-                        });
-                      });
+                          if (
+                            completeRegistration?.completed &&
+                            differenceInDays(new Date(), dataSet.entryDueDate) >
+                              0
+                          ) {
+                            return null;
+                          }
+
+                          return new Task({
+                            ...dataSet,
+                            completed: completeRegistration?.completed,
+                            completedDate: completeRegistration?.date,
+                          });
+                        })
+                        .filter((task) => task) as Task[];
                     })
                   );
               })
