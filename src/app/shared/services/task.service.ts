@@ -53,7 +53,12 @@ export class TaskService {
                         latestEntryPeriod.endDate
                       );
 
-                      startDates = [...startDates, entryStartDate];
+                      if (latestEntryPeriod?.startDate) {
+                        startDates = [
+                          ...startDates,
+                          this.#getDate(latestEntryPeriod.startDate),
+                        ];
+                      }
 
                       const isEntryOpen =
                         differenceInDays(new Date(), entryStartDate) >= 0;
@@ -67,8 +72,11 @@ export class TaskService {
                         dataSet['timelyDays'] as number
                       );
 
-                      if (entryDueDate) {
-                        endDates = [...endDates, entryDueDate];
+                      if (latestEntryPeriod?.endDate) {
+                        endDates = [
+                          ...endDates,
+                          this.#getDate(latestEntryPeriod.endDate),
+                        ];
                       }
 
                       return ((dataSet['organisationUnits'] as any[]) || [])
@@ -134,6 +142,16 @@ export class TaskService {
             );
         })
       );
+  }
+
+  #getDate(dateString: string) {
+    const date = moment(dateString);
+
+    if (!date.isValid()) {
+      return moment(dateString, 'DD-MM-YYYY').toDate();
+    }
+
+    return date.toDate();
   }
 
   #getEntryStartDate(formEndDate: string) {
