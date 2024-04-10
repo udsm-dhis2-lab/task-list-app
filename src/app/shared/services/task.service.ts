@@ -31,7 +31,7 @@ export class TaskService {
                 ','
               )}]&filter=organisationUnits.id:in:[${dataEntryOrgUnits.join(
                 ','
-              )}]`
+              )}]&filter=access.data.write:eq:true`
             )
             .pipe(
               switchMap((res: Record<string, Record<string, unknown>[]>) => {
@@ -96,8 +96,8 @@ export class TaskService {
 
                 return this.httpClient
                   .get(
-                    `completeDataSetRegistrations.json?${userDataSets
-                      .map((dataSet: string) => `dataSet=${dataSet}`)
+                    `completeDataSetRegistrations.json?${dataSets
+                      .map((dataSet: any) => `dataSet=${dataSet.id}`)
                       .join(
                         '&'
                       )}&startDate=${minStartDate}&endDate=${maxEndDate}&${dataEntryOrgUnits.map(
@@ -106,17 +106,19 @@ export class TaskService {
                   )
                   .pipe(
                     map((completenessResponse: Record<string, unknown>) => {
-                      const completeRegistrations = completenessResponse[
-                        'completeDataSetRegistrations'
-                      ] as Record<string, any>[];
+                      const completeRegistrations =
+                        (completenessResponse[
+                          'completeDataSetRegistrations'
+                        ] as Record<string, any>[]) || [];
 
                       return dataSets.map((dataSet: any) => {
                         const completeRegistration: any =
                           completeRegistrations.find(
                             (completeness: any) =>
-                              completeness.period === dataSet.entryPeriod?.id &&
-                              completeness.dataSet === dataSet.id &&
-                              completeness.organisationUnit ===
+                              completeness?.period ===
+                                dataSet.entryPeriod?.id &&
+                              completeness?.dataSet === dataSet.id &&
+                              completeness?.organisationUnit ===
                                 dataSet.orgUnit?.id
                           );
 
