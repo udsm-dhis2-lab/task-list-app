@@ -1,6 +1,6 @@
 {
-  "version": "0.0.0",
-  "name": "tasklist",
+  "version": "1.0.0",
+  "name": "Task List",
   "description": "",
   "appType": "APP",
   "launch_path": "index.html",

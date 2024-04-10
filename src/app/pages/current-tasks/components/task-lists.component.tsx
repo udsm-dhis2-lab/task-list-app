@@ -15,13 +15,37 @@ import {
   Button,
   Chip,
   Tag,
+  Input,
 } from "@dhis2/ui";
 import { TaskStatusCell } from "./task-status-cell.component";
 import { TaskProgress } from "./task-progress.component";
+import { TaskColumnHeader } from "src/app/pages/current-tasks/components/task-column-header.component";
+
+const taskListColumns = [
+  {
+    label: "Task",
+    name: "title",
+  },
+  {
+    label: "Start date",
+    name: "startDate",
+  },
+  {
+    label: "Due date",
+    name: "dueDate",
+  },
+  {
+    label: "Status",
+    name: "status",
+  },
+];
 
 export const TaskList = (props: { tasks: Task[] }) => {
   const { tasks } = props;
-  const [currentTaskFilter, setCurrentTaskFilter] = useState("ALL");
+  const [taskByStatus, setTaskByStatus] = useState("ALL");
+  const [taskFilter, setTaskFilter] = useState<
+    { name: string; value: string } | undefined
+  >(undefined);
 
   const taskSummary = useMemo(() => {
     const all = tasks.length;
@@ -37,12 +61,26 @@ export const TaskList = (props: { tasks: Task[] }) => {
   }, [tasks]);
 
   const filteredTasks = useMemo(() => {
-    if (currentTaskFilter === "ALL") {
-      return tasks;
+    if (taskByStatus === "ALL") {
+      return taskFilter
+        ? tasks.filter((task) =>
+            task[taskFilter.name].includes(taskFilter.value)
+          )
+        : tasks;
     }
 
-    return tasks.filter((task) => task.status === currentTaskFilter);
-  }, [tasks, currentTaskFilter]);
+    return tasks.filter((task) => {
+      const filterCondition = task.status === taskByStatus;
+
+      if (!taskFilter) {
+        return filterCondition;
+      }
+
+      return (
+        filterCondition && task[taskFilter.name].includes(taskFilter.value)
+      );
+    });
+  }, [tasks, taskByStatus, taskFilter]);
 
   return (
     <DataTable dense>
@@ -54,9 +92,9 @@ export const TaskList = (props: { tasks: Task[] }) => {
                 <Chip
                   dense
                   onClick={() => {
-                    setCurrentTaskFilter("ALL");
+                    setTaskByStatus("ALL");
                   }}
-                  selected={currentTaskFilter === "ALL"}
+                  selected={taskByStatus === "ALL"}
                 >
                   <div className="task-chip">
                     <span>{taskSummary.all}</span>
@@ -66,9 +104,9 @@ export const TaskList = (props: { tasks: Task[] }) => {
                 <Chip
                   dense
                   onClick={() => {
-                    setCurrentTaskFilter("TODO");
+                    setTaskByStatus("TODO");
                   }}
-                  selected={currentTaskFilter === "TODO"}
+                  selected={taskByStatus === "TODO"}
                 >
                   <div className="task-chip">
                     <span>{taskSummary.todo}</span>
@@ -78,9 +116,9 @@ export const TaskList = (props: { tasks: Task[] }) => {
                 <Chip
                   dense
                   onClick={() => {
-                    setCurrentTaskFilter("COMPLETED");
+                    setTaskByStatus("COMPLETED");
                   }}
-                  selected={currentTaskFilter === "COMPLETED"}
+                  selected={taskByStatus === "COMPLETED"}
                 >
                   <div className="task-chip">
                     <span>{taskSummary.completed}</span>
@@ -95,11 +133,16 @@ export const TaskList = (props: { tasks: Task[] }) => {
       </TableHead>
       <TableHead>
         <DataTableRow>
-          {/* <DataTableColumnHeader width="20px">Task ID</DataTableColumnHeader> */}
-          <DataTableColumnHeader>Task</DataTableColumnHeader>
-          <DataTableColumnHeader>Start date</DataTableColumnHeader>
-          <DataTableColumnHeader>Due date</DataTableColumnHeader>
-          <DataTableColumnHeader>Status</DataTableColumnHeader>
+          {taskListColumns.map((taskListColumn) => (
+            <TaskColumnHeader
+              key={taskListColumn.name}
+              label={taskListColumn.label}
+              onFilter={(event: any) => {
+                setTaskFilter(event);
+              }}
+              name={taskListColumn.name}
+            />
+          ))}
           <DataTableColumnHeader></DataTableColumnHeader>
         </DataTableRow>
       </TableHead>
@@ -112,14 +155,22 @@ export const TaskList = (props: { tasks: Task[] }) => {
             <DataTableCell>{task.dueDate}</DataTableCell>
             <TaskStatusCell status={task.status} />
             <DataTableCell align="right">
-              {/* <Button small>View task</Button> */}
+              {task.status === "TODO" ? (
+                <Button small>
+                  <a className="button-link" href={task.href}>
+                    Enter data
+                  </a>
+                </Button>
+              ) : (
+                <></>
+              )}
             </DataTableCell>
           </DataTableRow>
         ))}
       </TableBody>
       <TableFoot>
         <DataTableRow>
-          <DataTableCell colSpan="5">Footer content</DataTableCell>
+          <DataTableCell colSpan="5"></DataTableCell>
         </DataTableRow>
       </TableFoot>
     </DataTable>

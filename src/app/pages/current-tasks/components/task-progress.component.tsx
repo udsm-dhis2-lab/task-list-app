@@ -24,15 +24,17 @@ export const TaskProgress = (props: { taskSummary: any }) => {
 
     return "POOR";
   }, [progress]);
+
+  const progresText = useMemo(() => {
+    return `${progress}% Progress`;
+  }, [progress]);
+
   return (
     <Tag
       positive={progressStatus === "GOOD"}
       negative={progressStatus === "POOR"}
     >
-      <div className="task-chip">
-        <span>{progress}%</span>
-        <span>Progress</span>
-      </div>
+      {progresText}
     </Tag>
   );
 };

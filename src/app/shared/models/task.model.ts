@@ -12,6 +12,8 @@ export class Task {
   startDate!: string;
   dueDate!: string;
   status!: TaskStatusType;
+  href!: string;
+  [x: string]: any;
 
   constructor(dataSet: any) {
     this.id = dataSet.id;
@@ -19,6 +21,7 @@ export class Task {
     this.startDate = this.#getFormatedDate(dataSet.entryStartDate);
     this.dueDate = this.#getFormatedDate(dataSet.entryDueDate);
     this.status = this.#getStatus(dataSet.completed);
+    this.href = this.#getHref(dataSet);
   }
 
   #getTitle(dataSet: any) {
@@ -39,5 +42,9 @@ export class Task {
     }
 
     return 'TODO';
+  }
+
+  #getHref(dataSet: any): string {
+    return `../../../dhis-web-aggregate-data-entry/index.html#/?dataSetId=${dataSet.id}&orgUnitId=${dataSet.orgUnit?.id}&periodId=${dataSet.entryPeriod?.id}`;
   }
 }
