@@ -1,18 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { routes } from './app.routes';
-import { AppComponent, AppComponentContent } from './app.component';
 import { AppShellModule } from '@iapps/ng-dhis2-shell';
-import { environment } from '../environments/environment';
 import { ReactWrapperModule } from '@iapps/ng-dhis2-ui';
-import { NgDhis2ShellComponent } from '@iapps/ng-dhis2-shell';
-import { NgDhis2UiModule } from '@iapps/ng-dhis2-ui';
-import { TaskListComponent } from './task-list/task-list.component';
 import { NgxDhis2HttpClientModule } from '@iapps/ngx-dhis2-http-client';
+import { environment } from '../environments/environment';
+import { AppComponent, AppComponentContent } from './app.component';
+import { routes } from './app.routes';
 
 @NgModule({
-  declarations: [AppComponent, AppComponentContent, TaskListComponent],
+  declarations: [AppComponent, AppComponentContent],
   imports: [
     BrowserModule,
     ReactWrapperModule,

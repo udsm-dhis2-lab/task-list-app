@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { NgxDhis2HttpClientService, User } from '@iapps/ngx-dhis2-http-client';
-import { Observable, catchError, map, of, switchMap } from 'rxjs';
-import { Task } from '../models';
+import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
 import { Period } from '@iapps/period-utilities';
-import { addDays, differenceInDays, format, toDate, min, max } from 'date-fns';
-import moment from 'moment';
+import { addDays, differenceInDays, format, max, min } from 'date-fns';
 import { flatten, omit } from 'lodash';
+import moment from 'moment';
+import { Observable, map, of, switchMap } from 'rxjs';
+import { Task } from '../models';
 @Injectable()
 export class TaskService {
   constructor(private httpClient: NgxDhis2HttpClientService) {}

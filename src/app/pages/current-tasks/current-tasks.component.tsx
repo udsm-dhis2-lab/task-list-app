@@ -1,10 +1,11 @@
-import { Component, inject } from "@angular/core";
+import { Component, NgZone, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Task, TaskService } from "../../shared";
 import { ReactWrapperModule } from "@iapps/ng-dhis2-ui";
 import React, { useEffect, useState } from "react";
-import { CircularLoader, Center, Chip } from "@dhis2/ui";
-import { TaskList } from "./components";
+import { CircularLoader, Center, Chip, SelectorBar } from "@dhis2/ui";
+import { TaskList, TaskSelectorBar } from "./components";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-current-tasks",
@@ -16,10 +17,16 @@ import { TaskList } from "./components";
 })
 export class CurrentTasksComponent {
   taskService = inject(TaskService);
+  activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+  ngZone = inject(NgZone);
 
   TaskList = () => {
     const [loading, setLoading] = useState(true);
     const [tasks, setTasks] = useState<Task[]>([]);
+    const selectedCategory =
+      (this.activatedRoute?.snapshot?.queryParams || {})["category"] || "all";
+
     useEffect(() => {
       const taskSubscription = this.taskService.get().subscribe({
         next: (tasks) => {
@@ -44,6 +51,18 @@ export class CurrentTasksComponent {
           </div>
         ) : (
           <>
+            <SelectorBar>
+              <TaskSelectorBar
+                selectedCategory={selectedCategory}
+                onChange={(selectedCategory: string) => {
+                  this.ngZone.run(() =>
+                    this.router.navigate([`/current-tasks`], {
+                      queryParams: { category: selectedCategory },
+                    })
+                  );
+                }}
+              />
+            </SelectorBar>
             <div className="task-list-container">
               <TaskList tasks={tasks} />
             </div>

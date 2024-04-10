@@ -6,20 +6,16 @@ import React, { useMemo, useState } from "react";
 
 const taskCategories = [
   {
-    id: "current-tasks",
-    label: "Current tasks",
+    id: "all",
+    label: "All",
   },
   {
-    id: "await-approval",
-    label: "Awaiting approval",
+    id: "data-entry",
+    label: "Data Entry",
   },
   {
-    id: "need-correction",
-    label: "Need correction",
-  },
-  {
-    id: "completed",
-    label: "Completed",
+    id: "approval",
+    label: "Approval",
   },
 ];
 export const TaskSelectorBar = (props: {
@@ -28,14 +24,14 @@ export const TaskSelectorBar = (props: {
 }) => {
   const { selectedCategory, onChange } = props;
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(selectedCategory || "current-tasks");
+  const [selected, setSelected] = useState(selectedCategory || "all");
 
   const selectedLabel = useMemo(() => {
     return taskCategories.find(({ id }) => id === selected)?.label;
   }, [selected]);
   return (
     <SelectorBarItem
-      label="Tasks"
+      label="Category"
       value={selectedLabel}
       open={open}
       setOpen={setOpen}

@@ -154,16 +154,12 @@ export const TaskList = (props: { tasks: Task[] }) => {
             <DataTableCell>{task.startDate}</DataTableCell>
             <DataTableCell>{task.dueDate}</DataTableCell>
             <TaskStatusCell status={task.status} />
-            <DataTableCell align="right">
-              {task.status === "TODO" ? (
-                <Button small>
-                  <a className="button-link" href={task.href}>
-                    Enter data
-                  </a>
-                </Button>
-              ) : (
-                <></>
-              )}
+            <DataTableCell>
+              <Button small>
+                <a className="button-link" href={task.href}>
+                  {task.status === "TODO" ? "Enter data" : "View"}
+                </a>
+              </Button>
             </DataTableCell>
           </DataTableRow>
         ))}
