@@ -4,25 +4,18 @@
 
 import React, { useMemo } from "react";
 import { Task } from "../../../shared";
-import { DataTableCell } from "@dhis2/ui";
+import { DataTableCell, Tag } from "@dhis2/ui";
 
 export const TaskStatusCell = (task: Partial<Task>) => {
   const { status } = task;
 
-  const statusBackgroundColor = useMemo(() => {
-    switch (status) {
-      case "COMPLETED":
-        return "lightgreen";
-
-      case "TODO":
-      default:
-        return "#eff";
-    }
+  const isCompleted = useMemo(() => {
+    return status === "COMPLETED";
   }, [status]);
 
   return (
-    <DataTableCell backgroundColor={statusBackgroundColor}>
-      {task.status}
+    <DataTableCell>
+      <Tag positive={isCompleted}>{task.status}</Tag>
     </DataTableCell>
   );
 };

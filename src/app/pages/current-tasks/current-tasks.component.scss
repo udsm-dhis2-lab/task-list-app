@@ -4,3 +4,19 @@
 ::ng-deep .task-loader {
   height: calc(100vh - 100px);
 }
+
+::ng-deep .task-list-container {
+  padding: 16px;
+}
+
+::ng-deep .task-status {
+  font-size: 12px;
+  padding: 2px 8px 2px 8px;
+  border-radius: 3px;
+  display: inline;
+}
+
+::ng-deep .task-chip {
+  display: flex;
+  gap: 8px;
+}

@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Task, TaskService } from "../../shared";
 import { ReactWrapperModule } from "@iapps/ng-dhis2-ui";
 import React, { useEffect, useState } from "react";
-import { CircularLoader, Center } from "@dhis2/ui";
+import { CircularLoader, Center, Chip } from "@dhis2/ui";
 import { TaskList } from "./components";
 
 @Component({
@@ -43,7 +43,11 @@ export class CurrentTasksComponent {
             </Center>
           </div>
         ) : (
-          <TaskList tasks={tasks} />
+          <>
+            <div className="task-list-container">
+              <TaskList tasks={tasks} />
+            </div>
+          </>
         )}
       </>
     );
