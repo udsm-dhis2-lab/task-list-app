@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && cd dist/tasklist/browser && zip -r -D tasklist.zip .",
+    "build": "ng build --configuration production && cd dist/tasklist/browser && zip -r -D tasklist.zip .",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
