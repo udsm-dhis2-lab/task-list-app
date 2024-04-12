@@ -1,19 +1,16 @@
 import { Routes } from '@angular/router';
-import { TaskListComponent } from './task-list/task-list.component';
-
-
 
 export const routes: Routes = [
-{
-    path:'',
-    redirectTo:'task-list',
-    pathMatch:'full',
-},
-
-{
-    path:'task-list',
-    component:TaskListComponent
-},
-
-  
+  {
+    path: '',
+    redirectTo: 'current-tasks',
+    pathMatch: 'full',
+  },
+  {
+    path: 'current-tasks',
+    loadComponent: () =>
+      import('./pages/current-tasks/current-tasks.component').then(
+        (m) => m.CurrentTasksComponent
+      ),
+  },
 ];
