@@ -181,6 +181,20 @@ export class TaskService {
 
     return addDays(entryStartDate, timelyDays);
   }
+//   #getEntryDueDate(entryStartDate: Date, timelyDays: number) {
+//     if (timelyDays === 0) {
+//       return null;
+//     }
+
+//     const dueDate = addDays(entryStartDate, timelyDays);
+
+//     if (dueDate < new Date()) {
+//       console.log("testing the validation issue here if it works correctly....");
+//     }
+
+//     return dueDate;
+// }
+
 
   #getPeriod(periodType: string, openFuturePeriods: number) {
     try {

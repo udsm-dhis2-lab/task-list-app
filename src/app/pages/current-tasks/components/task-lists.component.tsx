@@ -1,8 +1,8 @@
 // Copyright 2024 UDSM DHIS2 Lab. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-
 import React, { useMemo, useState } from "react";
+import DueDateCell from "./due-date-cell";
 import { Task } from "../../../shared";
 import {
   DataTable,
@@ -68,19 +68,23 @@ export const TaskList = (props: { tasks: Task[] }) => {
           )
         : tasks;
     }
-
     return tasks.filter((task) => {
       const filterCondition = task.status === taskByStatus;
-
       if (!taskFilter) {
         return filterCondition;
       }
-
       return (
         filterCondition && task[taskFilter.name].includes(taskFilter.value)
       );
     });
   }, [tasks, taskByStatus, taskFilter]);
+
+  function isOverdue(dueDate: string) {
+    const [day, month, year] = dueDate.split("/");
+    const dueDateValue = new Date(`${year}-${month}-${day}`);
+    const currentDate = new Date();
+    return currentDate > dueDateValue;
+  }
 
   return (
     <DataTable dense>
@@ -152,8 +156,14 @@ export const TaskList = (props: { tasks: Task[] }) => {
             {/* <DataTableCell>{task.id}</DataTableCell> */}
             <DataTableCell>{task.title}</DataTableCell>
             <DataTableCell>{task.startDate}</DataTableCell>
-            <DataTableCell>{task.dueDate}</DataTableCell>
+            <DataTableCell>
+              <DueDateCell overdue={isOverdue(task.dueDate)}>
+                {task.dueDate}
+              </DueDateCell>
+            </DataTableCell>
+
             <TaskStatusCell status={task.status} />
+
             <DataTableCell>
               <Button small>
                 <a className="button-link" href={task.href}>
