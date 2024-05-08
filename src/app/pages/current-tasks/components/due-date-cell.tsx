@@ -9,12 +9,11 @@ interface DataTableCellProps {
 }
 const StyledDataTableCell = styled.span<DataTableCellProps>`
   color: black;
-  // background-color: ${(props) => (props.overdue ? "#fdd" : "inherit")};
   padding: 8px;
   display: inline-block;
   border-radius: ${(props) => (props.overdue ? "2px" : "0")};
   border: ${(props) =>
-    props.overdue ? "2px solid red" : "none"}; /* Set the border width to 2px */
+    props.overdue ? "2px solid red" : "none"}; 
 `;
 
 const DueDateCell: React.FC<DataTableCellProps> = ({ overdue, children }) => {
